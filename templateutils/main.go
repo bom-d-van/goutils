@@ -1,11 +1,42 @@
 package templateutils
 
+import (
+	htmltmpl "html/template"
+	"text/template"
+)
+
 type Register struct {
 	data map[interface{}]interface{}
 }
 
 func NewRegister() *Register {
 	return &Register{map[interface{}]interface{}{}}
+}
+
+// AddRegisterFunc provides an easy to add function for getting a Register to your text/template.Template
+func AddRegisterFunc(tmpl *template.Template, name string) *template.Template {
+	if name == "" {
+		name = "getregister"
+	}
+	tmpl.Funcs(map[string]interface{}{
+		name: func() *Register {
+			return NewRegister()
+		},
+	})
+	return tmpl
+}
+
+// AddRegisterFunc provides an easy to add function for getting a Register to your html/template.Template
+func AddHtmlRegisterFunc(tmpl *htmltmpl.Template, name string) *htmltmpl.Template {
+	if name == "" {
+		name = "getregister"
+	}
+	tmpl.Funcs(map[string]interface{}{
+		name: func() *Register {
+			return NewRegister()
+		},
+	})
+	return tmpl
 }
 
 func (r *Register) Set(key, val interface{}) string {
