@@ -39,17 +39,17 @@ var fixtures = []fixture{
 	{
 		name: "string error",
 		expect: `[Error Tracks 2006/01/02 15:04:05] error burnt out from here
-/Users/bom_d_van/Code/go/workspace/src/github.com/bom-d-van/goutil/errutil/wrap_test.go:9
-/Users/bom_d_van/Code/go/workspace/src/github.com/bom-d-van/goutil/errutil/wrap_test.go:13
-/Users/bom_d_van/Code/go/workspace/src/github.com/bom-d-van/goutil/errutil/wrap_test.go:17`,
+/Users/bom_d_van/Code/go/workspace/src/github.com/bom-d-van/goutils/errutils/wrap_test.go:9
+/Users/bom_d_van/Code/go/workspace/src/github.com/bom-d-van/goutils/errutils/wrap_test.go:13
+/Users/bom_d_van/Code/go/workspace/src/github.com/bom-d-van/goutils/errutils/wrap_test.go:17`,
 		err: stringerr3,
 	},
 	{
 		name: "standard error",
 		expect: `[Error Tracks 2006/01/02 15:04:05] error burnt out from here
-/Users/bom_d_van/Code/go/workspace/src/github.com/bom-d-van/goutil/errutil/wrap_test.go:21
-/Users/bom_d_van/Code/go/workspace/src/github.com/bom-d-van/goutil/errutil/wrap_test.go:25
-/Users/bom_d_van/Code/go/workspace/src/github.com/bom-d-van/goutil/errutil/wrap_test.go:29`,
+/Users/bom_d_van/Code/go/workspace/src/github.com/bom-d-van/goutils/errutils/wrap_test.go:21
+/Users/bom_d_van/Code/go/workspace/src/github.com/bom-d-van/goutils/errutils/wrap_test.go:25
+/Users/bom_d_van/Code/go/workspace/src/github.com/bom-d-van/goutils/errutils/wrap_test.go:29`,
 		err: standarderr3,
 	},
 }
