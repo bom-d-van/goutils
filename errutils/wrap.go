@@ -1,4 +1,4 @@
-package errutil
+package errutils
 
 import (
 	"fmt"
@@ -6,26 +6,26 @@ import (
 	"time"
 )
 
-type Err struct {
+type Error struct {
 	err     string
 	details string
 }
 
-func (e Err) Error() string {
+func (e Error) Error() string {
 	return e.err
 }
 
-func (e Err) Details() string {
+func (e Error) Details() string {
 	return e.details
 }
 
 // for test
 var getNow = func() string { return time.Now().Format("2006/01/02 15:04:05") }
 
-// Always return an Err.
+// Always return an Error.
 func Wrap(err interface{}) error {
 	_, file, line, _ := runtime.Caller(1)
-	if errs, ok := err.(Err); ok {
+	if errs, ok := err.(Error); ok {
 		errs.details += fmt.Sprintf("\n%s:%d", file, line)
 		err = errs
 	} else {
@@ -34,7 +34,7 @@ func Wrap(err interface{}) error {
 		}
 		marker := fmt.Sprintf("[Error Tracks %s]", getNow())
 		msg := err.(error).Error()
-		err = Err{
+		err = Error{
 			err:     msg,
 			details: fmt.Sprintf("%s %s\n%s:%d", marker, msg, file, line),
 		}

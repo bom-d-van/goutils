@@ -1,4 +1,4 @@
-package gocheckutil
+package gocheckutils
 
 import (
 	"regexp"

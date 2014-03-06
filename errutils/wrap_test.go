@@ -1,12 +1,14 @@
-package errutil
+package errutils
 
 import (
 	"errors"
+	"go/build"
+	"strings"
 	"testing"
 )
 
 func stringerr() error {
-	return Wrap("error burnt out from here")
+	return Wrap("error break out")
 }
 
 func stringerr2() error {
@@ -18,7 +20,7 @@ func stringerr3() error {
 }
 
 func standarderr() error {
-	return Wrap(errors.New("error burnt out from here"))
+	return Wrap(errors.New("error break out"))
 }
 
 func standarderr2() error {
@@ -38,18 +40,18 @@ type fixture struct {
 var fixtures = []fixture{
 	{
 		name: "string error",
-		expect: `[Error Tracks 2006/01/02 15:04:05] error burnt out from here
-/Users/bom_d_van/Code/go/workspace/src/github.com/bom-d-van/goutils/errutils/wrap_test.go:9
-/Users/bom_d_van/Code/go/workspace/src/github.com/bom-d-van/goutils/errutils/wrap_test.go:13
-/Users/bom_d_van/Code/go/workspace/src/github.com/bom-d-van/goutils/errutils/wrap_test.go:17`,
+		expect: `[Error Tracks 2006/01/02 15:04:05] error break out
+/src/github.com/bom-d-van/goutils/errutils/wrap_test.go:11
+/src/github.com/bom-d-van/goutils/errutils/wrap_test.go:15
+/src/github.com/bom-d-van/goutils/errutils/wrap_test.go:19`,
 		err: stringerr3,
 	},
 	{
 		name: "standard error",
-		expect: `[Error Tracks 2006/01/02 15:04:05] error burnt out from here
-/Users/bom_d_van/Code/go/workspace/src/github.com/bom-d-van/goutils/errutils/wrap_test.go:21
-/Users/bom_d_van/Code/go/workspace/src/github.com/bom-d-van/goutils/errutils/wrap_test.go:25
-/Users/bom_d_van/Code/go/workspace/src/github.com/bom-d-van/goutils/errutils/wrap_test.go:29`,
+		expect: `[Error Tracks 2006/01/02 15:04:05] error break out
+/src/github.com/bom-d-van/goutils/errutils/wrap_test.go:23
+/src/github.com/bom-d-van/goutils/errutils/wrap_test.go:27
+/src/github.com/bom-d-van/goutils/errutils/wrap_test.go:31`,
 		err: standarderr3,
 	},
 }
@@ -59,9 +61,11 @@ func TestWrap(t *testing.T) {
 	var erri interface{}
 	for _, tf := range fixtures {
 		erri = tf.err()
-		err := erri.(Err)
-		if err.Details() != tf.expect {
-			t.Errorf("Test %s:\nExpect:\n%s\nGot:\n%s", tf.name, tf.expect, err.Details())
+		err := erri.(Error)
+		details := err.Details()
+		details = strings.Replace(details, build.Default.GOPATH, "", -1)
+		if details != tf.expect {
+			t.Errorf("Test %s:\nExpect:\n%s\nGot:\n%s", tf.name, tf.expect, details)
 		}
 	}
 }
